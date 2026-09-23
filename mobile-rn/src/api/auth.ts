@@ -14,7 +14,7 @@ export const authApi = {
   register: (data: { name: string; email: string; password: string; account_type: AccountType }) =>
     api.post<{ message: string }>('/auth/register', data),
 
-  verifyOtp: (data: { email: string; otp: string }) =>
+  verifyOtp: (data: { email: string; code: string }) =>
     api.post<{ token: string; user: User }>('/auth/verify-otp', data),
 
   resendOtp: (data: { email: string }) => api.post('/auth/resend-otp', data),

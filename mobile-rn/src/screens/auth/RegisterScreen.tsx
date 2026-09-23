@@ -8,7 +8,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
 import { authApi, AccountType } from '../../api/auth';
-import { colors, spacing, font, radius } from '../../utils/theme';
+import { colors, spacing, font, radius, shadows } from '../../utils/theme';
 
 type Nav = NativeStackNavigationProp<any>;
 
@@ -43,12 +43,21 @@ export default function RegisterScreen() {
   return (
     <KeyboardAvoidingView style={s.flex} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <ScrollView contentContainerStyle={s.container} keyboardShouldPersistTaps="handled">
+
+        <View style={s.glowOrb} />
+
         <View style={s.header}>
-          <Text style={s.logo}>drytis</Text>
+          <View style={s.logoPlate}>
+            <View style={s.logoHighlight} />
+            <Text style={s.logo}>drytis</Text>
+            <View style={s.logoShadowLine} />
+          </View>
           <Text style={s.subtitle}>Create your account</Text>
         </View>
 
-        <View style={s.form}>
+        <View style={s.formCard}>
+          <View style={s.formCardHighlight} />
+
           <Text style={s.sectionLabel}>I am a...</Text>
           <View style={s.typeRow}>
             {(['creator', 'brand'] as AccountType[]).map((t) => (
@@ -56,7 +65,9 @@ export default function RegisterScreen() {
                 key={t}
                 style={[s.typeBtn, accountType === t && s.typeBtnActive]}
                 onPress={() => setAccountType(t)}
+                activeOpacity={0.8}
               >
+                <View style={s.typeBtnHighlight} />
                 <Text style={[s.typeBtnText, accountType === t && s.typeBtnTextActive]}>
                   {t.charAt(0).toUpperCase() + t.slice(1)}
                 </Text>
@@ -84,21 +95,54 @@ export default function RegisterScreen() {
 const s = StyleSheet.create({
   flex: { flex: 1, backgroundColor: colors.bg },
   container: { flexGrow: 1, padding: spacing.lg, justifyContent: 'center' },
-  header: { alignItems: 'center', marginBottom: spacing.xl },
-  logo: { fontSize: 40, fontWeight: '800', color: colors.primary },
-  subtitle: { fontSize: font.base, color: colors.textMuted, marginTop: spacing.xs },
-  form: { marginBottom: spacing.xl },
-  sectionLabel: { color: colors.textMuted, fontSize: font.sm, fontWeight: '600', marginBottom: spacing.sm },
+
+  glowOrb: {
+    position: 'absolute', top: -60, alignSelf: 'center',
+    width: 280, height: 280, borderRadius: 140,
+    backgroundColor: colors.primaryGlow,
+  },
+
+  header: { alignItems: 'center', marginBottom: spacing.xl, zIndex: 1 },
+  logoPlate: {
+    paddingHorizontal: spacing.xl, paddingVertical: spacing.md,
+    borderRadius: radius.xl, backgroundColor: colors.surfaceRaised,
+    borderWidth: 1, borderColor: colors.border,
+    borderTopColor: 'rgba(255,255,255,0.95)',
+    borderBottomColor: 'rgba(0,0,0,0.08)',
+    marginBottom: spacing.sm, overflow: 'hidden', ...shadows.raised,
+  },
+  logoHighlight: { position: 'absolute', top: 0, left: 0, right: 0, height: 1, backgroundColor: 'rgba(255,255,255,0.95)' },
+  logoShadowLine: { position: 'absolute', bottom: 0, left: 0, right: 0, height: 1, backgroundColor: 'rgba(0,0,0,0.08)' },
+  logo: { fontSize: 38, fontWeight: '800', color: colors.primary, letterSpacing: 2, textShadowColor: colors.primaryGlow, textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 8 },
+  subtitle: { fontSize: font.sm, color: colors.textMuted, letterSpacing: 1.5, textTransform: 'uppercase' },
+
+  formCard: {
+    backgroundColor: colors.surfaceRaised, borderRadius: radius.xl,
+    padding: spacing.lg, borderWidth: 1, borderColor: colors.border,
+    borderTopColor: 'rgba(255,255,255,0.95)', borderBottomColor: 'rgba(0,0,0,0.08)',
+    marginBottom: spacing.xl, overflow: 'hidden', ...shadows.raised,
+  },
+  formCardHighlight: { position: 'absolute', top: 0, left: 0, right: 0, height: 1, backgroundColor: 'rgba(255,255,255,0.95)' },
+
+  sectionLabel: { color: colors.textMuted, fontSize: font.sm, fontWeight: '600', marginBottom: spacing.sm, textTransform: 'uppercase', letterSpacing: 0.5 },
   typeRow: { flexDirection: 'row', gap: spacing.sm, marginBottom: spacing.lg },
   typeBtn: {
     flex: 1, paddingVertical: spacing.md, borderRadius: radius.md,
     borderWidth: 1, borderColor: colors.border,
-    backgroundColor: colors.surfaceAlt, alignItems: 'center',
+    borderTopColor: 'rgba(255,255,255,0.95)', borderBottomColor: 'rgba(0,0,0,0.08)',
+    backgroundColor: colors.surfaceDepressed, alignItems: 'center', overflow: 'hidden',
+    shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.08, shadowRadius: 4, elevation: 2,
   },
-  typeBtnActive: { borderColor: colors.primary, backgroundColor: colors.primaryLight },
+  typeBtnActive: {
+    borderColor: colors.primary, borderTopColor: 'rgba(255,255,255,0.95)',
+    backgroundColor: colors.primaryLight,
+    shadowColor: colors.primary, shadowOpacity: 0.2,
+  },
+  typeBtnHighlight: { position: 'absolute', top: 0, left: 0, right: 0, height: 1, backgroundColor: 'rgba(255,255,255,0.9)' },
   typeBtnText: { color: colors.textMuted, fontWeight: '600', fontSize: font.base },
   typeBtnTextActive: { color: colors.primary },
+
   footer: { flexDirection: 'row', justifyContent: 'center', marginTop: spacing.md },
   footerText: { color: colors.textMuted, fontSize: font.base },
-  footerLink: { color: colors.primary, fontSize: font.base, fontWeight: '600' },
+  footerLink: { color: colors.primary, fontSize: font.base, fontWeight: '700' },
 });
