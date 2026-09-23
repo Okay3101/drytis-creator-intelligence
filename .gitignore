@@ -38,3 +38,6 @@ storage/framework/sessions/*
 storage/framework/views/*
 storage/app/private/*
 u2584p3643_drytis_creator_intelligence
+
+# corruption artifacts (unreadable, do not commit)
+app/Http/Controllers/Api/Admin-corrupt/
