@@ -1,0 +1,25 @@
+{
+  "preview_url": "https://drytis-creator-intel-f2umwb.drytis.dev/",
+  "accounts": [
+    {
+      "role": "admin",
+      "email": "admin@drytis.dev",
+      "password": "Admin@12345",
+      "login_url": "/admin",
+      "api": "POST /api/admin/login",
+      "verified_at": "2026-09-22T07:07:00Z",
+      "verified_by": "leader",
+      "notes": "Seeded by DatabaseSeeder. Admin SPA at /admin."
+    },
+    {
+      "role": "creator",
+      "email": "qa.mobile@test.dev",
+      "password": "Creator@123",
+      "login_url": "/ (new mobile app; /m/ during build)",
+      "api": "POST /api/auth/login",
+      "verified_at": "2026-09-22T07:07:00Z",
+      "verified_by": "leader",
+      "notes": "Existing QA account (id=2, creator, verified+active); password reset to Creator@123 and login verified via /api/auth/login returning a Sanctum token."
+    }
+  ]
+}

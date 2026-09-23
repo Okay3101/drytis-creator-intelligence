@@ -1,0 +1,11 @@
+12 /workspace/vendor/laravel/framework/src/Illuminate/Container/Util.php(43): Illuminate\\Container\\BoundMethod::{closure:Illuminate\\Container\\BoundMethod::call():35}()
+#13 /workspace/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(96): Illuminate\\Container\\Util::unwrapIfClosure()
+#14 /workspace/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(35): Illuminate\\Container\\BoundMethod::callBoundMethod()
+#15 /workspace/vendor/laravel/framework/src/Illuminate/Container/Container.php(803): Illuminate\\Container\\BoundMethod::call()
+#16 /workspace/vendor/laravel/framework/src/Illuminate/Console/Command.php(292): Illuminate\\Container\\Container->call()
+#17 /workspace/vendor/symfony/console/Command/Command.php(285): Illuminate\\Console\\Command->execute()
+#18 /workspace/vendor/laravel/framework/src/Illuminate/Console/Command.php(261): Symfony\\Component\\Console\\Command\\Command->run()
+#19 /workspace/vendor/symfony/console/Application.php(1144): Illuminate\\Console\\Command->run()
+#20 /workspace/vendor/symfony/console/Application.php(379): Symfony\\Component\\Console\\Application->doRunCommand()
+#21 /workspace/vendor/symfony/console/Application.php(218): Symfony\\Component\\Console\\Application->doRun()
+#22 /workspace/vendor/laravel/framework/src/Illuminate/Foundation/Console/

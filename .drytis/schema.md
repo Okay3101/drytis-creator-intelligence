@@ -1,0 +1,35 @@
+# Schema (core tables)
+
+users(id, account_type enum creator|brand, email, password_hash, email_verified_at, otp fields, status, timestamps)
+creator_profiles(user_id, name, username, bio, niche, avatar_path, location, languages json, audience json, style json, content_categories json, objectives json)
+brand_profiles(user_id, brand_name, description, logo, website, industry, location)
+instagram_accounts(id, creator_id, ig_user_id, username, account_type, oauth tokens encrypted, token_expires_at, connection_status, last_synced_at)
+contents(id, instagram_account_id, ig_media_id, type, media metadata json, permalink, thumbnail, caption, insights json, posted_at)
+analyses(id, instagram_account_id, type, data_coverage json, results json, confidence, ai_model_version, status, timestamps)
+diagnoses(id, instagram_account_id, problems json, strengths json, evidence json, recommendations json, top_problem_keys json, content_health int, helpful_feedback enum nullable, timestamps)
+winning_patterns(id, instagram_account_id, category, pattern json, evidence json, confidence)
+competitors(id, creator_id, instagram_account_id, ig_user_id, username, status)  -- max 3 enforced
+competitor_analyses(id, competitor_id, mode quick|full, top_content json, patterns json, gaps json, last_analyzed_at)  -- latest only, replaced on refresh
+trends(id, type, title, market, niche, language, momentum, saturation, status trending|emerging|saturated|declining, relevance json, source, timestamps)
+creator_trend_states(trend_id, creator_id, dismissed|saved|used)
+scripts(id, creator_id, idea, inputs json, toggles json(winning_patterns, competitor_insights, trends), script json, mode production|voiceover, revision_of, timestamps)
+reel_readiness(id, creator_id, media_path, inputs json, score decimal, strengths json, problems json, status, timestamps)
+uploads(id, user_id, path, mime, size, validation_status, retention_delete_at)
+campaigns(id, brand_id, basic json, advanced json (required/preferred split), status draft|published|closed|completed, timestamps)
+campaign_applications(id, campaign_id, creator_id, message, question_responses json, status pending|approved|rejected, timestamps)
+campaign_workspaces(id, campaign_id, creator_id, status, payment_status pending|paid nullable, timestamps)
+deliverables(id, workspace_id, type, requirements, deadline, status)
+deliverable_submissions(id, deliverable_id, media_path, status submitted|approved|revision_requested, revision_history json, timestamps)
+messages(id, workspace_id nullable, sender_id, body, read_at)  -- campaign chat; support separate
+support_conversations(id, user_id, status, assigned_admin_id); support_messages(...)
+automations(id, creator_id, instagram_account_id, content_id, trigger json, follow_requirement bool, response json, status, usage_count)
+automation_usage(id, automation_id, user_ig, interaction_type, billed free|paid, created_at)
+plans(id, name, monthly_limit, price, is_unlimited, active); subscriptions(id, creator_id, plan_id, status, current_period_end, grace_until, gateway_customer_id)
+coupons(id, code, type percent|fixed|free_days|bonus_allowance, value, expires_at, usage_limit, per_user_limit, eligible_plans json, starts_at, active, assigned_creator_id, marketing_campaign)
+coupon_redemptions(id, coupon_id, subscription_id, created_at)
+notifications(id, user_id, type, title, body, data json, read_at, channel sent|inapp)
+push_tokens(id, user_id, token, platform)
+platform_settings(key, value json, version, updated_by, updated_at)  -- audited
+audit_logs(id, actor_id, action, subject_type, subject_id, meta json)
+reports(id, reporter_id, subject_type, subject_id, reason, status)
+admin_users: users with role admin + admin_permissions
